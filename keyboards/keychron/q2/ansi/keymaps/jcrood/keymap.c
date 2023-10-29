@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, KC_BRID, KC_BRIU, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,          _______,
         RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______, _______,  _______, _______,          _______,
         _______, RGB_RMOD,RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______, _______,           _______,          _______,
-        _______,          _______, _______, _______, _______, _______, NK_TOGG, _______, _______, _______, _______,           _______, _______,
+        _______,          _______, _______, _______, _______, QK_BOOT, NK_TOGG, _______, _______, _______, _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______),
 
     [_FN4] = LAYOUT_ansi_67(
@@ -60,25 +60,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-bool rgb_matrix_indicators_user() {
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (get_highest_layer(layer_state) > 0) {
+        uint8_t layer = get_highest_layer(layer_state);
 
-    switch(get_highest_layer(layer_state|default_layer_state)) {
-        case _FN4:
-            rgb_matrix_set_color_all(RGB_RED);
-            break;
-        case _KEYB:
-            rgb_matrix_set_color_all(RGB_GREEN);
-            break;
-        case _MAC:
-            rgb_matrix_set_color_all(RGB_BLUE);
-            break;
-        case _FN:
-            rgb_matrix_set_color_all(RGB_YELLOW);
-            break;
-        default:
-            break;
+        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                uint8_t index = g_led_config.matrix_co[row][col];
+
+                if (index >= led_min && index < led_max && index != NO_LED &&
+                keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
+                    rgb_matrix_set_color(index, RGB_GREEN);
+                }
+            }
+        }
     }
-
     return false;
 }
-
