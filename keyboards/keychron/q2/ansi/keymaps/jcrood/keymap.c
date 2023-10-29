@@ -51,13 +51,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______),
 
     [_FN4] = LAYOUT_ansi_67(
-        CMDGRV,  _______, CAPSCR,  CAPSEL, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,          _______,
+        CMDGRV,  _______, CAPSCR,  CAPSEL,  _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,          _______,
         _______, LOCKSCR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,          _______,
-        _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_MPLY, _______, _______, _______, _______, _______, _______, _______,           _______,          _______,
+        _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_MPLY, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,           _______,          _______,
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______)
 
 };
+
 
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
@@ -70,7 +71,22 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
                 if (index >= led_min && index < led_max && index != NO_LED &&
                 keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
-                    rgb_matrix_set_color(index, RGB_GREEN);
+                    switch(layer) {
+                        case _FN4:
+                            rgb_matrix_set_color(index, RGB_GREEN);
+                            break;
+                        case _KEYB:
+                            rgb_matrix_set_color(index, RGB_RED);
+                            break;
+                        case _MAC:
+                            rgb_matrix_set_color(index, RGB_BLUE);
+                            break;
+                        case _FN:
+                            rgb_matrix_set_color(index, RGB_YELLOW);
+                            break;
+                        default:
+                            break;                 
+                    }
                 }
             }
         }
