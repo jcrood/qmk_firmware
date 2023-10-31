@@ -5,6 +5,10 @@
 
 #include QMK_KEYBOARD_H
 
+enum custom_keycodes {
+    UPDIR = SAFE_RANGE
+};
+
 enum layers{
     _BASE,
     _FN,
@@ -51,14 +55,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______),
 
     [_FN4] = LAYOUT_ansi_67(
-        CMDGRV,  _______, CAPSCR,  CAPSEL,  _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,          _______,
+        CMDGRV,  _______, CAPSCR,  CAPSEL,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, LOCKSCR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,          _______,
         _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_MPLY, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,           _______,          _______,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______, _______,
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, UPDIR,   _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______)
 
 };
 
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    switch (keycode) {
+        case UPDIR:  // Types ../ to go up a directory on the shell.
+            if (record->event.pressed) {
+                SEND_STRING("../");
+            }
+            return false;
+        }
+    return true;
+}
 
 // only highlight assigned keys
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
