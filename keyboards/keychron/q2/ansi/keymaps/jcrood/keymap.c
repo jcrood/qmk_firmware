@@ -6,9 +6,7 @@
 #include QMK_KEYBOARD_H
 
 enum custom_keycodes {
-    UPDIR = SAFE_RANGE,
-    WIDETXT,
-    TAUNTTXT
+    UPDIR = SAFE_RANGE
 };
 
 enum layers{
@@ -36,7 +34,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_FN] = LAYOUT_ansi_67(
         KC_TILD,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,  KC_DEL,          _______,
-        _______, _______, WIDETXT, _______, _______, TAUNTTXT, _______, _______, _______, _______, _______, _______,  _______, _______,          KC_HOME,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,          KC_HOME,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______,          KC_END,
         _______,          _______, _______, _______, _______, _______, _______, _______, _______, UPDIR,   _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______),
@@ -51,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_ADJUST] = LAYOUT_ansi_67(
         _______, KC_BRID, KC_BRIU, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,          _______,
-        RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, _______, _______,  _______, _______,          _______,
+        RGB_TOG, RGB_MOD, RGB_VAI, RGB_HUI, RGB_SAI, RGB_SPI, _______, _______, _______, _______, DB_TOGG, _______,  _______, _______,          _______,
         _______, RGB_RMOD,RGB_VAD, RGB_HUD, RGB_SAD, RGB_SPD, _______, _______, _______, _______, _______, _______,           _______,          _______,
         _______,          _______, _______, EE_CLR,  _______, QK_BOOT, _______, _______, _______, _______, _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______),
@@ -72,67 +70,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    static struct {
-        bool on;
-        bool first;
-    } w_i_d_e_t_e_x_t = {false, false};
-
-    if (w_i_d_e_t_e_x_t.on) {
-        if (record->event.pressed) {
-            switch (keycode) {
-                case KC_A...KC_0:
-                case KC_MINUS...KC_SLASH:
-                case KC_SPC:
-                    if (w_i_d_e_t_e_x_t.first) {
-                        w_i_d_e_t_e_x_t.first = false;
-                    } else {
-                        send_char(' ');
-                    }
-                    break;
-                case KC_ENT:
-                    w_i_d_e_t_e_x_t.first = true;
-                    break;
-                case KC_BSPC:
-                    send_char('\b'); // backspace
-                    break;
-            }
-        }
-    }
-
-    static bool tAuNtTeXt = false;
-
-    if (tAuNtTeXt) {
-        if (record->event.pressed) {
-            if (keycode != KC_SPC) {
-                register_code(KC_CAPS);
-                unregister_code(KC_CAPS);
-            }
-        }
-    }
-        
     switch (keycode) {
         case UPDIR:  // Types ../ to go up a directory on the shell.
             if (record->event.pressed) {
                 SEND_STRING("../");
             }
             return false;
-        }
-        case WIDETXT:
-            if (record->event.pressed) {
-                w_i_d_e_t_e_x_t.on = !w_i_d_e_t_e_x_t.on;
-                w_i_d_e_t_e_x_t.first = true;
-            }
-            return false;
-        case TAUNTXT:
-            if (record->event.pressed) {
-                tAuNtTeXt = !tAuNtTeXt;
-                // when it's turned on, toggle caps lock (makes first letter lowercase)
-                if (tAuNtTeXt) {
-                    register_code(KC_CAPS);
-                    unregister_code(KC_CAPS);
-                }
-            }
-            return false;
+    }
     return true;
 }
 
