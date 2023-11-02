@@ -6,6 +6,7 @@
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
 
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 200
 
 // disable most RGB effects
 #define ENABLE_RGB_MATRIX_SOLID_COLOR         // Static single hue no speed support
