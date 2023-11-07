@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 #include "jcrood.h"
+#include "planck.h"
 
 #ifdef AUDIO_ENABLE
 float planck_sound[][2] = SONG(PLANCK_SOUND);
