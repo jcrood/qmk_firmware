@@ -4,6 +4,7 @@
  */
 
 #include QMK_KEYBOARD_H
+#include "jcrood.h"
 
 enum custom_keycodes {
     UPDIR = SAFE_RANGE
@@ -18,10 +19,6 @@ enum layers{
 };
 
 #define FN_TAB LT(_FN4, KC_TAB)
-#define CMDGRV LGUI(KC_GRV)             // cmd ` - focus to next window
-#define LOCKSCR LCTL(LGUI(KC_Q))        // ctrl cmd Q  - lock screen
-#define CAPSCR SGUI(KC_3)               // shift cmd 3 - capture screen
-#define CAPSEL SGUI(KC_4)               // shift cmd 4 - capture selection
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {

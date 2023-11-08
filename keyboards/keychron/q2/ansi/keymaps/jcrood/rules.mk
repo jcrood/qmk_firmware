@@ -14,6 +14,8 @@ AUTO_SHIFT_ENABLE = no      # Auto Shift
 TAP_DANCE_ENABLE = no
 CAPS_WORD_ENABLE = yes		# also add #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD to config.h
 
+RGB_MATRIX_CUSTOM_USER = yes
+
 # debug
 
 DEBUG_EEPROM = no
