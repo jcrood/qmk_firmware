@@ -3,7 +3,7 @@ RGB_MATRIX_EFFECT(LARSON_SCANNER)
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
 #define BAR_WIDTH 20
-#define BRIGHTNESS_STEP 6
+#define BRIGHTNESS_DECAY 6
 
 uint8_t brightness[RGB_MATRIX_LED_COUNT];
 
@@ -24,23 +24,20 @@ static bool LARSON_SCANNER(effect_params_t* params) {
     RGB_MATRIX_USE_LIMITS(led_min, led_max);
     
     for (uint8_t i = led_min; i < led_max; i++) {
-      RGB_MATRIX_TEST_LED_FLAGS();
-      
-      uint8_t px = g_led_config.point[i].x;
-  
-      if (px >= x_min && px <= x_max) {
-          brightness[i] = hsv.v;
-      } 
+        RGB_MATRIX_TEST_LED_FLAGS();
+        uint8_t px = g_led_config.point[i].x;
+        if (px >= x_min && px <= x_max) {
+            brightness[i] = hsv.v;
+        }
+        HSV targetHSV = rgb_matrix_config.hsv;
+        targetHSV.v = brightness[i];
+        RGB rgb = rgb_matrix_hsv_to_rgb(targetHSV);
+        rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
     }
     
     if (led_max == RGB_MATRIX_LED_COUNT) {
-        HSV newhsv = rgb_matrix_config.hsv;
-    
         for (uint8_t i = 0; i < RGB_MATRIX_LED_COUNT; i++) {
-            newhsv.v = brightness[i];
-            RGB rgb = rgb_matrix_hsv_to_rgb(newhsv);
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-            brightness[i] = qsub8(brightness[i], BRIGHTNESS_STEP);
+            brightness[i] = qsub8(brightness[i], BRIGHTNESS_DECAY); 
         }
     }
 
