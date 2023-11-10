@@ -1,14 +1,10 @@
-/* 
+/*
  * MINE!
  *
  */
 
 #include QMK_KEYBOARD_H
 #include "jcrood.h"
-
-enum custom_keycodes {
-    UPDIR = SAFE_RANGE
-};
 
 enum layers{
     _BASE,
@@ -33,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TILD,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,   KC_F12,  KC_DEL,          _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,          KC_HOME,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,           _______,          KC_END,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, UPDIR,   _______,           _______, _______,
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, M_UPDIR, _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______),
 
     [_MAC] = LAYOUT_ansi_67(
@@ -55,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CMDGRV,  _______, _______, CAPSCR,  CAPSEL,   _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, LOCKSCR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,  _______, _______,          _______,
         _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_MPLY, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,           _______,          _______,
-        _______,          _______, _______, _______, _______, _______, _______, _______, _______, UPDIR,   _______,           _______, _______,
+        _______,          _______, _______, _______, _______, _______, _______, _______, _______, M_UPDIR, _______,           _______, _______,
         _______, _______, _______,                            _______,                            _______, _______,  _______, _______, _______, _______)
 
 };
@@ -65,17 +61,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _FN, _MAC, _ADJUST);
 }
 
-
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    switch (keycode) {
-        case UPDIR:  // Types ../ to go up a directory on the shell.
-            if (record->event.pressed) {
-                SEND_STRING("../");
-            }
-            return false;
-    }
-    return true;
-}
 
 // only highlight assigned keys
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
@@ -102,7 +87,7 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                             rgb_matrix_set_color(index, RGB_YELLOW);
                             break;
                         default:
-                            break;                 
+                            break;
                     }
                 }
             }
