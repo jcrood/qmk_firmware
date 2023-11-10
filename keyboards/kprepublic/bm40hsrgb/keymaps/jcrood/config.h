@@ -2,8 +2,6 @@
 
 #include "rgb_stuff.h"
 
-#undef LOCKING_SUPPORT_ENABLE
-#undef LOCKING_RESYNC_ENABLE
 
 
 //#define TAPPING_TERM 200
@@ -12,7 +10,6 @@
 
 #define RGB_DISABLE_TIMEOUT 60000
 
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 180
 #define RGBLIGHT_HUE_STEP 20
 
 #endif
