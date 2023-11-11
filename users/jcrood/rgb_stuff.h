@@ -1,5 +1,4 @@
 
-#ifdef RGB_MATRIX_ENABLE
 
 // RGB stuffs
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
@@ -54,4 +53,4 @@
 
 #define ENABLE_RGB_MATRIX_LARSON_SCANNER // K.I.T.T.
 
-#endif
+
