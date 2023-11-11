@@ -1,10 +1,7 @@
 // MINE - Anne Pro 2
 
 #include QMK_KEYBOARD_H
-
-enum custom_keycodes {
-    UPDIR = SAFE_RANGE
-};
+#include "jcrood.h"
 
 enum anne_pro_layers {
   _BASE_LAYER,
@@ -21,10 +18,6 @@ enum anne_pro_layers {
 
 // fn4 stuffs
 #define FN_TAB LT(_FN4, KC_TAB)
-#define CMDGRV LGUI(KC_GRV)             // cmd ` - focus to next window
-#define LOCKSCR LCTL(LGUI(KC_Q))        // ctrl cmd Q  - lock screen
-#define CAPSCR SGUI(KC_3)               // shift cmd 3 - capture screen
-#define CAPSEL SGUI(KC_4)               // shift cmd 4 - capture selection
 
 // Key symbols are based on QMK. Use them to remap your keyboard
 /*
@@ -50,44 +43,31 @@ const uint16_t keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MO(_FN), KC_LALT, KC_LGUI,                   KC_SPC,                                      KC_RGUI, RALTL,   FNDWN,   CTRLR
     ),
 
-    [_FN] = LAYOUT_60_ansi( 
+    [_FN] = LAYOUT_60_ansi(
         KC_TILD, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, UPDIR,   _______,                   _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, M_UPDIR, _______,                   _______,
         _______, _______, _______,                   _______,                                     _______, _______, _______, _______
     ),
 
-    [_MAC] = LAYOUT_60_ansi( 
-        KC_GRV,  KC_BRID, KC_BRIU, _______, _______, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, KC_DEL, 
+    [_MAC] = LAYOUT_60_ansi(
+        KC_GRV,  KC_BRID, KC_BRIU, _______, _______, RGB_VAD, RGB_VAI, KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_VOLD, KC_VOLU, KC_DEL,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______,
         _______, _______, _______,                   _______,                                     _______, _______, _______, _______
     ),
 
-    [_FN4] = LAYOUT_60_ansi( 
+    [_FN4] = LAYOUT_60_ansi(
         CMDGRV,  _______, _______, CAPSCR,  CAPSEL,  _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, LOCKSCR, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, KC_VOLD, KC_VOLU, KC_MUTE, KC_MPLY, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______,          _______,
-        _______, _______, _______, _______, _______, _______, _______, _______, _______, UPDIR,   _______,                   _______,
+        _______, _______, _______, _______, _______, _______, _______, _______, _______, M_UPDIR, _______,                   _______,
         _______, _______, _______,                   _______,                                     _______, _______, _______, _______
     ),
 };
 
 void keyboard_post_init_user(void) {
     ap2_led_disable();
-}
-
-
-
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    switch (keycode) {
-        case UPDIR:  // Types ../ to go up a directory on the shell.
-            if (record->event.pressed) {
-                SEND_STRING("../");
-            }
-            return false;
-    }
-    return true;
 }
