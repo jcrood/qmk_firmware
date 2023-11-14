@@ -11,7 +11,7 @@ RGB_MATRIX_ENABLE = yes		# fancy rgb stuffs
 AUTO_SHIFT_ENABLE = no      # Auto Shift
 TAP_DANCE_ENABLE = no
 
-CAPS_WORD_ENABLE = yes		# also add #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD to config.h
+CAPS_WORD_ENABLE = no		# also add #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD to config.h
 
 # debug
 
