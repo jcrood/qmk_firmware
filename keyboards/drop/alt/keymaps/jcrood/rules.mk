@@ -12,6 +12,6 @@ RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 RGB_MATRIX_ENABLE = yes
 TAP_DANCE_ENABLE = no
 DEBUG_EEPROM = no
-CAPS_WORD_ENABLE = yes
+CAPS_WORD_ENABLE = no
 
 RGB_MATRIX_CUSTOM_USER = yes
